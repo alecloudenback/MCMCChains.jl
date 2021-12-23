@@ -23,9 +23,9 @@ chn2 = Chains(val2)
 
 lpfun = function f(chain::Chains)
 
-    p1 = Array(chain[:,1,:])
-    p2 = Array(chain[:,2,:])
-    p3 = Array(chain[:,3,:])
+    p1 = Array(chain[var=1])
+    p2 = Array(chain[var=2])
+    p3 = Array(chain[var=3])
 
     lp = map(p -> logpdf(Normal(p), x[1]), p1)
     lp += map(p -> logpdf(Normal(p), x[2]), p2)

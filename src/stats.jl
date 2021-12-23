@@ -64,13 +64,16 @@ function cor(
     end
 end
 
+
 function chaindataframe_cor(name, names_of_params, chains::AbstractMatrix; kwargs...)
     # Compute the correlation matrix.
     cormat = cor(chains)
 
     # Summarize the results in a named tuple.
-    nt = (; parameters = names_of_params,
-          zip(names_of_params, (cormat[:, i] for i in axes(cormat, 2)))...)
+    nt = (
+        parameters = names_of_params,
+        zip(names_of_params, (cormat[:, i] for i in axes(cormat, 2)))...
+    )
 
     # Create a ChainDataFrame.
     return ChainDataFrame(name, nt; kwargs...)

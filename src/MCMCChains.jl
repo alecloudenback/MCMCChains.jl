@@ -1,10 +1,10 @@
 module MCMCChains
 
-using AxisArrays
-const axes = Base.axes
 import AbstractMCMC
 import AbstractMCMC: chainscat
 using Compat
+using ConcreteStructs
+using DimensionalData
 using Distributions
 using RecipesBase
 using SpecialFunctions
@@ -50,22 +50,19 @@ export rstar
 
 export hpd
 
-"""
-    Chains
 
-Parameters:
+const MReal = Union{R, Missing} where R<:Real
 
-- `value`: An `AxisArray` object with axes `iter` × `var` × `chains`
-- `logevidence` : A field containing the logevidence.
-- `name_map` : A `NamedTuple` mapping each variable to a section.
-- `info` : A `NamedTuple` containing miscellaneous information relevant to the chain.
-The `info` field can be set using `setinfo(c::Chains, n::NamedTuple)`.
-"""
-struct Chains{T,A<:AxisArray{T,3},L,K<:NamedTuple,I<:NamedTuple} <: AbstractMCMC.AbstractChains
-    value::A
-    logevidence::L
-    name_map::K
-    info::I
+@concrete terse struct Chains <: AbstractMCMC.AbstractChains
+    "A `DimArray` with axes `iter` × `var` × `chains` containing all sampled variables."
+    value::DimArray
+    "A field containing the log-Bayes factor, for methods that provide it." 
+    logevidence::Union{Real, Missing}
+    "A `NamedTuple` mapping each variable to a section." # Also needs better doc.
+    logdensity::AbstractVector{Real}
+    "A `NamedTuple` containing miscellaneous information relevant to the chain. The
+    `info` field can be set using `setinfo(c::Chains, n::NamedTuple)`."
+    info::NamedTuple
 end
 
 include("utils.jl")

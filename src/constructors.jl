@@ -73,10 +73,10 @@ end
 
 function to_vector_of_vectors(chain::Chains)
     data = chain.value.data
-    return [Vector(vec(data[:, :, i])) for i in axes(data, 3)]
+    return [Vector(vec(data[:, :, i])) for i in axes(data, :chain)]
 end
 
 function to_vector_of_matrices(chain::Chains)
     data = chain.value.data
-    return [Matrix(data[:, :, i]) for i in axes(data, 3)]
+    return [Matrix(data[:, :, i]) for i in axes(data, :chain)]
 end

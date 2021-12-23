@@ -197,3 +197,14 @@ function _isstrictlyincreasing_nonempty(x::AbstractVector{Int})
     end
     return true
 end
+
+
+# Takes `x` and returns its only element if `x` is a singleton.
+# Otherwise return `x` unchanged.
+function _strip_singletons(x::AbstractArray)
+    try
+        return only(x)
+    catch
+        return x
+    end
+end

@@ -4,6 +4,7 @@
 *.orig
 tmp/
 .vscode/
+/.lh
 
 *.jld
 .ipynb_checkpoints
